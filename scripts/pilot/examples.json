@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "1.0.0",
+  "fixtureNotice": "All records, sources, claims, releases, pull requests, and decisions in this file are SYNTHETIC contract fixtures. They are not observations of real releases or production integrations.",
+  "validSignals": [
+    {
+      "name": "fresh-single-accept",
+      "expectedEvaluation": "signal-only",
+      "trustedAuthoritativeUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency"}],
+      "signal": {
+        "schemaVersion": "1.0.0", "reviewId": "11111111-1111-4111-8111-111111111111", "recordedAt": "2026-09-10T12:00:00Z", "actor": "fixture-owner", "generation": 1, "idempotencyKey": "fixture-single-accept-001", "pullRequest": null,
+        "items": [{
+          "itemId": "fixture-module-root-time", "decision": "accept", "reason": null,
+          "consumer": {"repository": "example/consumer", "manifest": "go.mod", "commit": "1111111111111111111111111111111111111111", "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "from": {"declared": {"module": "example.com/dependency", "version": "v1.2.0", "revision": "2222222222222222222222222222222222222222"}, "effective": {"module": "example.com/dependency", "version": "v1.2.0", "revision": "2222222222222222222222222222222222222222"}},
+          "to": {"declared": {"module": "example.com/dependency", "version": "v1.2.1", "revision": "3333333333333333333333333333333333333333"}, "effective": {"module": "example.com/dependency", "version": "v1.2.1", "revision": "3333333333333333333333333333333333333333"}},
+          "analysis": {"path": "results/fixtures/example.com/dependency/v1/CHANGELOG.md", "revision": "4444444444444444444444444444444444444444", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "cutoff": "2026-09-10T11:00:00Z", "sourceIds": ["fixture-source-code", "fixture-git-diff", "fixture-release-notes"]},
+          "coverage": {"expectedUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency"}], "reviewedUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency"}], "complete": true}
+        }]
+      }
+    },
+    {
+      "name": "fresh-grouped-mixed-review",
+      "expectedEvaluation": "manual-block-mixed",
+      "trustedAuthoritativeUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/a"}, {"repository": "example/consumer", "manifest": "tools/go.mod", "module": "example.com/b"}],
+      "signal": {
+        "schemaVersion": "1.0.0", "reviewId": "22222222-2222-4222-8222-222222222222", "recordedAt": "2026-09-10T12:05:00Z", "actor": "fixture-owner", "generation": 7, "idempotencyKey": "fixture-grouped-mixed-001",
+        "pullRequest": {"repository": "example/consumer", "number": 42, "baseSha": "5555555555555555555555555555555555555555", "headSha": "6666666666666666666666666666666666666666", "dependencyGroup": "fixture-go-minor-and-patch"},
+        "items": [
+          {
+            "itemId": "fixture-group-item-a", "decision": "accept", "reason": "Fixture compatibility evidence is complete.",
+            "consumer": {"repository": "example/consumer", "manifest": "go.mod", "commit": "5555555555555555555555555555555555555555", "manifestSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+            "from": {"declared": {"module": "example.com/a", "version": "v1.0.0", "revision": "7777777777777777777777777777777777777777"}, "effective": {"module": "example.com/a", "version": "v1.0.0", "revision": "7777777777777777777777777777777777777777"}},
+            "to": {"declared": {"module": "example.com/a", "version": "v1.0.1", "revision": "8888888888888888888888888888888888888888"}, "effective": {"module": "example.com/a", "version": "v1.0.1", "revision": "8888888888888888888888888888888888888888"}},
+            "analysis": {"path": "results/fixtures/example.com/a/v1/CHANGELOG.md", "revision": "9999999999999999999999999999999999999999", "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "cutoff": "2026-09-10T11:00:00Z", "sourceIds": ["fixture-a-code", "fixture-a-diff"]},
+            "coverage": {"expectedUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/a"}, {"repository": "example/consumer", "manifest": "tools/go.mod", "module": "example.com/b"}], "reviewedUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/a"}, {"repository": "example/consumer", "manifest": "tools/go.mod", "module": "example.com/b"}], "complete": true}
+          },
+          {
+            "itemId": "fixture-group-item-b", "decision": "decline", "reason": null,
+            "consumer": {"repository": "example/consumer", "manifest": "tools/go.mod", "commit": "5555555555555555555555555555555555555555", "manifestSha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"},
+            "from": {"declared": {"module": "example.com/b", "version": "v0.8.0", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}, "effective": {"module": "example.net/fork-b", "version": "v0.8.0", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}},
+            "to": {"declared": {"module": "example.com/b", "version": "v0.9.0", "revision": "cccccccccccccccccccccccccccccccccccccccc"}, "effective": {"module": "example.net/fork-b", "version": "v0.9.0", "revision": "dddddddddddddddddddddddddddddddddddddddd"}},
+            "analysis": {"path": "results/fixtures/example.com/b/v0/CHANGELOG.md", "revision": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "cutoff": "2026-09-10T11:00:00Z", "sourceIds": ["fixture-b-original-diff", "fixture-b-fork-diff", "fixture-b-consumer-usage"]},
+            "coverage": {"expectedUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/a"}, {"repository": "example/consumer", "manifest": "tools/go.mod", "module": "example.com/b"}], "reviewedUpdates": [{"repository": "example/consumer", "manifest": "go.mod", "module": "example.com/a"}, {"repository": "example/consumer", "manifest": "tools/go.mod", "module": "example.com/b"}], "complete": true}
+          }
+        ]
+      }
+    }
+  ],
+  "negativeCases": [
+    {"name": "missing-patch-release", "expectedError": "VERSION_GAP", "fixture": {"eligibleVersions": ["v1.0.0", "v1.0.1", "v1.1.0"], "analyzedVersions": ["v1.0.0", "v1.1.0"]}},
+    {"name": "insufficient-sources", "expectedError": "INSUFFICIENT_EVIDENCE", "fixture": {"sourceKinds": ["git-diff"], "hasSourceCode": false, "substantiveClaims": 2}},
+    {"name": "stale-decision", "expectedError": "STALE_SIGNAL", "fixture": {"recordedAnalysisRevision": "1111111111111111111111111111111111111111", "currentAnalysisRevision": "2222222222222222222222222222222222222222"}},
+    {"name": "duplicate-item-id", "expectedError": "DUPLICATE_ITEM_ID", "fixture": {"itemIds": ["same-item", "same-item"]}},
+    {"name": "malformed-timestamp", "expectedError": "INVALID_TIMESTAMP", "fixture": {"recordedAt": "2026-99-10T25:61:00Z"}},
+    {"name": "idempotent-rerun", "expectedError": "NONE", "fixture": {"idempotencyKeys": ["same-key-001", "same-key-001"], "expectedStoredRecords": 1}},
+    {"name": "concurrent-write", "expectedError": "GENERATION_CONFLICT", "fixture": {"expectedGeneration": 8, "submittedGeneration": 7}}
+  ],
+  "signalValidationCases": [
+    {
+      "name": "forged-full-c4-collapsed-manifests",
+      "expectedError": "INCOMPLETE_COVERAGE",
+      "trustedAuthoritativeUpdates": [
+        {"repository": "octomation/go-tool", "manifest": "go.mod", "module": "github.com/golang/mock"},
+        {"repository": "octomation/go-tool", "manifest": "tools/go.mod", "module": "github.com/golang/mock"}
+      ],
+      "signal": {
+        "schemaVersion": "1.0.0", "reviewId": "33333333-3333-4333-8333-333333333333", "recordedAt": "2026-09-10T12:10:00Z", "actor": "fixture-owner", "generation": 8, "idempotencyKey": "fixture-c4-forged-001",
+        "pullRequest": {"repository": "octomation/go-tool", "number": 314, "baseSha": "1111111111111111111111111111111111111111", "headSha": "2222222222222222222222222222222222222222", "dependencyGroup": "golang-mock"},
+        "items": [{
+          "itemId": "forged-root-only-golang-mock", "decision": "accept", "reason": null,
+          "consumer": {"repository": "octomation/go-tool", "manifest": "go.mod", "commit": "1111111111111111111111111111111111111111", "manifestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "from": {"declared": {"module": "github.com/golang/mock", "version": "v1.4.4", "revision": "3333333333333333333333333333333333333333"}, "effective": {"module": "github.com/golang/mock", "version": "v1.4.4", "revision": "3333333333333333333333333333333333333333"}},
+          "to": {"declared": {"module": "github.com/golang/mock", "version": "v1.6.0", "revision": "4444444444444444444444444444444444444444"}, "effective": {"module": "github.com/golang/mock", "version": "v1.6.0", "revision": "4444444444444444444444444444444444444444"}},
+          "analysis": {"path": "results/fixtures/github.com/golang/mock/v1/CHANGELOG.md", "revision": "5555555555555555555555555555555555555555", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "cutoff": "2026-09-10T11:00:00Z", "sourceIds": ["fixture-mock-source", "fixture-mock-diff"]},
+          "coverage": {"expectedUpdates": [{"repository": "octomation/go-tool", "manifest": "go.mod", "module": "github.com/golang/mock"}], "reviewedUpdates": [{"repository": "octomation/go-tool", "manifest": "go.mod", "module": "github.com/golang/mock"}], "complete": true}
+        }]
+      }
+    },
+    {"name": "missing-trusted-authority", "basedOn": "fresh-single-accept", "trustedAuthoritativeUpdates": null, "mutations": [], "expectedError": "INCOMPLETE_COVERAGE"},
+    {"name": "duplicate-item-id-through-validator", "basedOn": "fresh-grouped-mixed-review", "trustedAuthoritativeUpdates": "from-base", "mutations": [{"op": "replace", "path": "/items/1/itemId", "value": "fixture-group-item-a"}], "expectedError": "DUPLICATE_ITEM_ID"},
+    {"name": "duplicate-semantic-identity-through-validator", "basedOn": "fresh-grouped-mixed-review", "trustedAuthoritativeUpdates": "from-base", "mutations": [{"op": "replace", "path": "/items/1/consumer/manifest", "value": "go.mod"}, {"op": "replace", "path": "/items/1/to/declared/module", "value": "example.com/a"}], "expectedError": "DUPLICATE_SEMANTIC_IDENTITY"}
+  ],
+  "analysisFixture": {
+    "language": "en", "synthetic": true, "heading": "# example/dependency v1 (SYNTHETIC)",
+    "sources": [
+      {"id": "fixture-baseline-source-code", "kind": "source-code", "synthetic": true, "locator": "https://example.invalid/dependency/tree/v1.0.0/parser.go", "sourceRevision": "2222222222222222222222222222222222222222", "capturedAt": "2026-09-10T10:00:00Z", "status": "present", "content": "SYNTHETIC SOURCE CODE v1.0.0\nfunc Parse(input string) (int, error)\nGo: 1.22\nBehavior: returns a token count.\n", "contentSha256": "66c87c459cf26ddcbe40ea20b9abee6c312cc54fbec9edffb365253bbc33b688", "absenceReason": null},
+      {"id": "fixture-source-code", "kind": "source-code", "synthetic": true, "locator": "https://example.invalid/dependency/tree/v1.0.1/parser.go", "sourceRevision": "3333333333333333333333333333333333333333", "capturedAt": "2026-09-10T10:01:00Z", "status": "present", "content": "SYNTHETIC SOURCE CODE v1.0.1\nfunc Parse(input string) (int, error)\nGo: 1.22\nBehavior: empty input returns zero tokens.\n", "contentSha256": "f7f35874709e89c1a9245e42bc243215f0683cfa83e5ca9b7b9b4a95d9365369", "absenceReason": null},
+      {"id": "fixture-git-diff", "kind": "git-diff", "synthetic": true, "locator": "https://example.invalid/dependency/compare/v1.0.0...v1.0.1", "sourceRevision": "3333333333333333333333333333333333333333", "capturedAt": "2026-09-10T10:02:00Z", "status": "present", "content": "SYNTHETIC GIT DIFF v1.0.0...v1.0.1\nParse keeps signature func Parse(input string) (int, error).\nEmpty input token count changes from one to zero.\n", "contentSha256": "ef429bc496196e6ce73f4627dcc3dd36c6e8a9f2ef39e0fcbee95ec45058ad39", "absenceReason": null},
+      {"id": "fixture-tag-message", "kind": "tag-message", "synthetic": true, "locator": "refs/tags/v1.0.1", "sourceRevision": "3333333333333333333333333333333333333333", "capturedAt": "2026-09-10T10:03:00Z", "status": "absent", "content": null, "contentSha256": null, "absenceReason": "SYNTHETIC fixture tag is lightweight and has no annotated tag message."},
+      {"id": "fixture-release-notes", "kind": "release-notes", "synthetic": true, "locator": "https://example.invalid/dependency/releases/tag/v1.0.1", "sourceRevision": "3333333333333333333333333333333333333333", "capturedAt": "2026-09-10T10:04:00Z", "status": "present", "content": "SYNTHETIC RELEASE NOTES v1.0.1\nCorrect empty-input token counting. No Parse signature change.\n", "contentSha256": "c62e643eb8c2d6fdfcb8043db468f3506b52603a69ac11fdf57bfc16bf3958e9", "absenceReason": null},
+      {"id": "fixture-changelog", "kind": "changelog", "synthetic": true, "locator": "CHANGELOG.md@v1.0.1", "sourceRevision": "3333333333333333333333333333333333333333", "capturedAt": "2026-09-10T10:05:00Z", "status": "inaccessible", "content": null, "contentSha256": null, "absenceReason": "SYNTHETIC fixture records an inaccessible changelog capture; no bytes were available."},
+      {"id": "fixture-consumer-usage", "kind": "consumer-usage", "synthetic": true, "locator": "SYNTHETIC/example/consumer/path.go:12", "sourceRevision": "1111111111111111111111111111111111111111", "capturedAt": "2026-09-10T10:06:00Z", "status": "present", "content": "SYNTHETIC CONSUMER USAGE\npath.go:12 calls count, err := Parse(input).\n", "contentSha256": "22919190ab34a3c1d93a230d44b53bbebbab5f56a47e12bc43dfad8913baa9f9", "absenceReason": null}
+    ],
+    "baseline": {
+      "version": "v1.0.0",
+      "capabilities": [{"claim": "The synthetic baseline exposes a Parser that returns a token count.", "sourceIds": ["fixture-baseline-source-code"], "certainty": "confirmed"}],
+      "publicApi": [{"claim": "The synthetic public entry point is Parse(string) (int, error).", "sourceIds": ["fixture-baseline-source-code"], "certainty": "confirmed"}],
+      "compatibilityEnvelope": [{"claim": "The synthetic baseline supports Go 1.22 in its fixture metadata.", "sourceIds": ["fixture-baseline-source-code"], "certainty": "confirmed"}],
+      "evidence": [{"claim": "The baseline tree is represented by a synthetic source-code record.", "sourceIds": ["fixture-baseline-source-code"], "certainty": "confirmed"}],
+      "uncertainty": [{"claim": "Runtime performance is not represented by this synthetic baseline.", "sourceIds": [], "certainty": "unknown"}]
+    },
+    "release": {
+      "version": "v1.0.1", "previous": "v1.0.0", "compareUrl": "https://example.invalid/dependency/compare/v1.0.0...v1.0.1",
+      "summary": [{"claim": "The synthetic v1.0.1 diff corrects token counting for an empty input.", "sourceIds": ["fixture-git-diff", "fixture-release-notes"], "certainty": "confirmed"}],
+      "apiChanges": [{"claim": "The synthetic comparison contains no signature change to Parse.", "sourceIds": ["fixture-baseline-source-code", "fixture-source-code", "fixture-git-diff"], "certainty": "confirmed"}],
+      "compatibility": [{"claim": "The inspected synthetic consumer call remains source-compatible.", "sourceIds": ["fixture-git-diff", "fixture-consumer-usage"], "certainty": "inference", "reasoning": "The used Parse call and its result handling are unchanged while the cited diff preserves its signature.", "bounds": "This inference covers only example/consumer/path.go:12; it does not establish all runtime behaviour or other consumers."}],
+      "migration": [{"claim": "No source migration is required for the inspected synthetic call site.", "sourceIds": ["fixture-git-diff", "fixture-consumer-usage"], "certainty": "inference", "reasoning": "No cited API or configuration delta affects the recorded call site.", "bounds": "Generated code, deployment configuration, and unrecorded call sites were not inspected."}],
+      "evidenceAndProvenance": [{"claim": "The synthetic release analysis uses versioned code, diff, release-note, and consumer-usage content.", "sourceIds": ["fixture-baseline-source-code", "fixture-source-code", "fixture-git-diff", "fixture-release-notes", "fixture-consumer-usage"], "certainty": "confirmed"}, {"claim": "Tag-message content is absent and changelog content is inaccessible in this synthetic capture.", "sourceIds": ["fixture-tag-message", "fixture-changelog"], "certainty": "unknown"}],
+      "impact": [{"consumer": "example/consumer", "manifest": "go.mod", "usage": "path.go:12 invokes Parse(input)", "changes": [{"claim": "No code change is needed at the recorded synthetic call site.", "sourceIds": ["fixture-consumer-usage", "fixture-git-diff"], "certainty": "inference", "reasoning": "The used signature is unchanged in the cited synthetic diff.", "bounds": "Only the recorded call site is covered."}], "risks": [{"claim": "Runtime behaviour outside the empty-input case remains unexecuted in this fixture.", "sourceIds": [], "certainty": "unknown"}], "benefits": [{"claim": "The empty-input count correction can benefit the recorded consumer path.", "sourceIds": ["fixture-git-diff", "fixture-consumer-usage"], "certainty": "inference", "reasoning": "The consumer calls Parse and the synthetic diff changes its empty-input result.", "bounds": "Benefit depends on that input reaching this call."}], "validationCommands": ["go test ./... (SYNTHETIC proposed command)"]}],
+      "uncertainty": [{"claim": "This synthetic fixture does not execute runtime, benchmark, or integration tests.", "sourceIds": [], "certainty": "unknown"}]
+    }
+  },
+  "analysisMutationCases": [
+    {"name": "missing-source-revision", "mutations": [{"op": "remove", "path": "/sources/0/sourceRevision"}], "expectedError": "INVALID_SOURCE_RECORD"},
+    {"name": "missing-captured-timestamp", "mutations": [{"op": "remove", "path": "/sources/0/capturedAt"}], "expectedError": "INVALID_SOURCE_RECORD"},
+    {"name": "missing-present-content-hash", "mutations": [{"op": "remove", "path": "/sources/0/contentSha256"}], "expectedError": "INVALID_SOURCE_CONTENT"},
+    {"name": "mismatched-content-hash", "mutations": [{"op": "replace", "path": "/sources/0/contentSha256", "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}], "expectedError": "CONTENT_HASH_MISMATCH"},
+    {"name": "unresolved-claim-reference", "mutations": [{"op": "replace", "path": "/baseline/capabilities/0/sourceIds/0", "value": "fixture-missing-source"}], "expectedError": "UNRESOLVED_SOURCE_REFERENCE"},
+    {"name": "omitted-required-source-kind", "mutations": [{"op": "remove", "path": "/sources/5"}], "expectedError": "MISSING_SOURCE_KIND"},
+    {"name": "missing-absence-reason", "mutations": [{"op": "remove", "path": "/sources/3/absenceReason"}], "expectedError": "MISSING_ABSENCE_REASON"}
+  ],
+  "chatValidationCases": [
+    {"name": "chat-stale-analysis-revision", "expectedError": "STALE_CHAT_CONTEXT", "requestSelection": {"consumer": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency", "from": "v1.0.0", "to": "v1.0.1", "analysisRevision": "4444444444444444444444444444444444444444"}, "currentSelection": {"consumer": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency", "from": "v1.0.0", "to": "v1.0.1", "analysisRevision": "5555555555555555555555555555555555555555"}, "usedAnalysisRevision": "4444444444444444444444444444444444444444"},
+    {"name": "chat-stale-selection-same-revision", "expectedError": "STALE_CHAT_CONTEXT", "requestSelection": {"consumer": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency", "from": "v1.0.0", "to": "v1.0.1", "analysisRevision": "4444444444444444444444444444444444444444"}, "currentSelection": {"consumer": "example/consumer", "manifest": "tools/go.mod", "module": "example.com/other", "from": "v2.0.0", "to": "v2.0.1", "analysisRevision": "4444444444444444444444444444444444444444"}, "usedAnalysisRevision": "4444444444444444444444444444444444444444"}
+  ],
+  "chatFixture": {
+    "synthetic": true,
+    "request": {"question": "Does this update change the API used by this consumer?", "selection": {"consumer": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency", "from": "v1.0.0", "to": "v1.0.1", "analysisRevision": "4444444444444444444444444444444444444444"}, "allowedSourceIds": ["fixture-source-code", "fixture-git-diff"]},
+    "response": {"answer": "The synthetic comparison shows no signature change to the recorded Parse call.", "citations": [{"sourceId": "fixture-git-diff", "url": "https://example.invalid/dependency/compare/v1.0.0...v1.0.1"}], "uncertainty": ["Synthetic fixture: runtime behaviour was not executed."], "usedAnalysisRevision": "4444444444444444444444444444444444444444", "decisionAuthority": "owner", "canWriteDecision": false},
+    "currentSelection": {"consumer": "example/consumer", "manifest": "go.mod", "module": "example.com/dependency", "from": "v1.0.0", "to": "v1.0.1", "analysisRevision": "4444444444444444444444444444444444444444"},
+    "expectedContextStatus": "current"
+  }
+}
